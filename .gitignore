@@ -42,4 +42,10 @@ next-env.d.ts
 
 # Prisma
 prisma/dev.db
+prisma/*.sqlite
 /lib/generated/prisma
+
+# Logs and temporary files
+*.log
+GEMINI.md
+error.txt

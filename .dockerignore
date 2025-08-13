@@ -12,3 +12,7 @@ Dockerfile
 README.md
 .dockerignore
 prisma/dev.db
+prisma/*.sqlite
+*.log
+GEMINI.md
+error.txt
