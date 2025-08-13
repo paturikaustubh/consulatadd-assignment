@@ -1,0 +1,61 @@
+export default function Loading(
+  open: boolean,
+  message = "Loading Data...",
+  id?: string,
+) {
+  if (open) {
+    if (document.querySelector(".loading-container")) {
+      return;
+    }
+
+    const rootEle = document.getElementById("root");
+
+    // CREATE CONTAINER
+    const loadingContainer = document.createElement("div");
+    loadingContainer.className =
+      "fixed inset-0 z-50 flex items-center justify-center w-full h-full loading-container";
+    loadingContainer.style.backgroundColor = "rgba(0 0 0 / 0.8)";
+    loadingContainer.style.backdropFilter = "blur(5px)";
+    loadingContainer.style.animation = "fade-in 150ms ease-in-out forwards";
+
+    // CREATE CONTENT
+    const loadingContent = document.createElement("div");
+    loadingContent.className =
+      "absolute flex items-center gap-2 text-3xl text-white lg:gap-4 md:gap-3 lg:text-5xl md:text-4xl";
+
+    // CREATE ANIMATION
+    const loadingAnimation = document.createElement("span");
+    loadingAnimation.className =
+      "rounded-full border-[6px] border-y-neutral-700 border-l-neutral-700 size-12 border-r-neutral-300";
+    loadingAnimation.style.animation =
+      "loading-animation 2000ms linear infinite";
+
+    // APPEND ANIMATION INTO CONTENT
+    loadingContent.append(message);
+    loadingContent.append(loadingAnimation);
+
+    // APPEND CONTENT TO CONTAINER
+    loadingContainer.appendChild(loadingContent);
+
+    if (id) {
+      const loadingParent = document.getElementById(id);
+
+      if (loadingParent) {
+        const parentFirstChild = loadingParent.firstChild;
+        loadingParent?.insertBefore(loadingContainer, parentFirstChild);
+      }
+    } else document.body.insertBefore(loadingContainer, rootEle);
+  } else {
+    const loadingContainer =
+      document.querySelectorAll<HTMLDivElement>(".loading-container");
+
+    if (loadingContainer) {
+      loadingContainer.forEach((container) => {
+        container.style.animation = "fade-out 150ms ease-in-out forwards";
+        setTimeout(() => {
+          container.remove();
+        }, 200);
+      });
+    }
+  }
+}
